@@ -24,5 +24,13 @@
   "license": "ISC",
   "engines": {
     "node": "10.x"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MANISHUKIRADE/task-manger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MANISHUKIRADE/task-manger/issues"
+  },
+  "homepage": "https://github.com/MANISHUKIRADE/task-manger#readme"
 }
