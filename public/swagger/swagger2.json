@@ -1,0 +1,33 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "contact API",
+		"version": "0.0.1",
+		"description": "get the contacts from data base return the array of contacts in JASON format and the return the data of specified contact id  on loclahost:9000"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:9000/",
+			"description": "Optional server description, e.g. Main (production) server"
+		},
+		{
+			"url": "http://staging-api.example.com",
+			"description": "Optional server description, e.g. Internal staging server for testing"
+		}
+	],
+	"paths": {
+		"/api/v1/contacts/": {
+			"summary": "get the array of JSON object of contacts",
+			"get": {
+				"summary": "get the COntact JSON object",
+				"description": "",
+				"operationId": "",
+				"responses": {
+					"default": {
+						"description": "Default error sample response"
+					}
+				}
+			}
+		}
+	}
+}

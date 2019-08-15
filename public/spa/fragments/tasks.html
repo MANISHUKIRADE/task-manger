@@ -1,0 +1,71 @@
+<section>
+    <table style="font-size: 20px;" class="text-center table table-striped table-bordered table-hover ">
+        <thead>
+            <tr>
+                <th>Delete</th>
+                <th>Task Title</th>
+                <th>Task Description</th>
+                <th>Priority</th>
+
+                <th>Date</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="task in tasksData">
+                <td>
+                    <button id='{{task._id}}' ng-click='deleteTask($event)' type="button"
+                        class="btn   btn-danger">Delete</button>
+                </td>
+                <td> <a href="#!/taskdetails/{{task._id}}">{{task.tasktitle}}</a> </td>
+                <td>{{task.taskdiscription}}</td>
+                <td>{{task.priority}}</td>
+
+                <td>{{task.taskDate | date : mm/dd/yyyy }}</td>
+
+            </tr>
+            <tr>
+                <td>
+                    Add New Task
+                    <p>
+                        <button type="button" class="btn btn-sm btn-success" ng-click='addTask()'>Add Task</button>
+                    </p>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="Title"></label>
+                        <input type="text" ng-model='tasktitle' class="form-control" aria-describedby="helpId"
+                            placeholder="Enter Title of Your Task">
+
+                    </div>
+                </td>
+
+                <td>
+                    <div class="form-group">
+                        <label for="Description"></label>
+                        <input type="text" ng-model='taskdiscription' class="form-control" aria-describedby="helpId"
+                            placeholder="Enter Description of Your task">
+
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group"> 
+                        <select ng-model='priority'  class="form-control " placeholder="Select Priority">
+                            <option  value="High">High</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+
+                    <div class="form-group"> 
+                        <label for="Date"></label>
+                        <div>
+                            <input type="date" ng-model='taskDate' class="form-control" value="" required="required">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
