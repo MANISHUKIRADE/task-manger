@@ -239,7 +239,7 @@
                 $location.path('/user/tasks/')
             }
         })
-        app.controller('registerController', function ($scope, $rootScope, taskService) {
+        app.controller('registerController', function ($scope, $rootScope, $location,taskService) {
             $scope.fname;
             $scope.lname;
             $scope.username;
@@ -260,6 +260,7 @@
                 }).catch(function (error) {
                     console.log(error)
                 })
+				$location.path('/login/')
             }
 
         })

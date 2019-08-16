@@ -134,7 +134,7 @@ module.exports = {
     deleteSubtaskServive: async  function(taskid,subtaskid){
         deleteSubtask(taskid,subtaskid)
     },
-    addSubtaskService: async function (taskid,sutaskobj){
+    addSubtaskService: async function (taskid,subtaskobj){
         addsubTask(taskid,subtaskobj)
     }
 
