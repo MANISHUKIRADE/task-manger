@@ -1,67 +1,50 @@
 const mongoose = require('mongoose')
 const mongo = require('mongodb');
+const taskservice = require('./taskServices')
 const url = "mongodb+srv://MANISH:MANISH%409797@cluster0-qdzy9.mongodb.net/task-manager"
 mongoose.connect(url, {
     useNewUrlParser: true
 })
 let userSchema = new mongoose.Schema({
     name: {
-        fname: String,
-        lname: String
+      fname: String,
+      lname: String
     },
     username: String,
     password: String,
     mobileno: String,
     registerdate: Date,
     userStatus: {
-        type: Boolean,
-        default: true
+      type: Boolean,
+      default: true
     },
     Task: [{
+      priority: String,
+      tasktitle: String,
+      taskdiscription: String,
+      taskcreated: Date,
+      taskDate: Date,
+      //  status: Boolean,
+  
+      subtask: [{
         priority: String,
         tasktitle: String,
         taskdiscription: String,
         taskcreated: Date,
         taskDate: Date,
-    //    status: Boolean,
-
-        subtask: [{
-            priority: String,
-            tasktitle: String,
-            taskdiscription: String,
-            taskcreated: Date,
-            taskDate: Date,
-  //          status: Boolean
-        }]
+        //    status: Boolean
+      }]
     }]
-
-})
+  
+  })
+  
 let userModel = mongoose.model('Users1', userSchema)
-async function getSubtasks(id) {
-    let data;
-
-    const o_id = new mongo.ObjectID(id);
-    await userModel.aggregate([{
-        $unwind: "$Task"
-    }, {
-        $match: {
-            'Task._id': {
-                $eq: o_id
-            }
-        }
-    }, {
-        $project: {
-            Task: 1,
-            _id: 0
-        }
-    }], (err, res) => {
-        if (err) throw err
-        console.log(res)
-        data = res[0].Task.subtask;
- //       console.log(data)
-    })
-    return data
+async function getSubtasks(id){
+    let data = await taskservice.getSingleTask(id)
+ //   console.log(data[0].Task.subtask)
+    return data[0].Task.subtask
 }
+
 async function addsubTask(taskid,subtaskobj){
     let subtasks = await getSubtasks(taskid)
     subtasks.push(subtaskobj)
