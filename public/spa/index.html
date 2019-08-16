@@ -83,7 +83,7 @@
 
                     $http({
                         method: 'POST',
-                        url: 'http://localhost:9000/api/v1/authenticate/',
+                        url: 'https://task-managerapp.herokuapp.com/api/v1/authenticate/',
                         data: loginData
                     }).then(function (response) {
                         let data = response.data;
@@ -110,7 +110,7 @@
                 return $q(function (resolve, response) {
                         $http({
                             method: 'POST',
-                            url: 'http://localhost:9000/api/v1/adduser/',
+                            url: 'https://task-managerapp.herokuapp.com/api/v1/adduser/',
                             data: user
                         })
                     }).then(function (response) {
@@ -124,7 +124,7 @@
                 return $q(function (resolve, reject) {
                     $http({
                         method: 'GET',
-                        url: 'http://localhost:9000/api/v1/user/' + id,
+                        url: 'https://task-managerapp.herokuapp.com/api/v1/user/' + id,
 
                     }).then(function (response) {
                         //                           console.log(response)
@@ -143,7 +143,7 @@
                 return $q(function (resolve, reject) {
                     $http({
                         method: 'PUT',
-                        url: 'http://localhost:9000/api/v1/edituser/' + id,
+                        url: 'https://task-managerapp.herokuapp.com/api/v1/edituser/' + id,
                         data: userdata
                     }).then(function (response) {
                         console.log('edited')
@@ -157,7 +157,7 @@
                 return $q(function (resolve, reject) {
                     $http({
                         method: 'GET',
-                        url: 'http://localhost:9000/api/v1/users/' + id + '/tasks/'
+                        url: 'https://task-managerapp.herokuapp.com/api/v1/users/' + id + '/tasks/'
                     }).then(function (response) {
 
                         resolve(response.data)
@@ -171,7 +171,7 @@
                 return $q(function (resolve, reject) {
                     $http({
                         method: 'POST',
-                        url: 'http://localhost:9000/api/v1/users/' + userid + '/addtasks/',
+                        url: 'https://task-managerapp.herokuapp.com/api/v1/users/' + userid + '/addtasks/',
                         data: taskobj
                     }).then(function (response) {
                         resolve(response)
@@ -184,7 +184,7 @@
                 return $q(function(resolve,reject){
                     $http({
                         method:'DELETE',
-                        url: 'http://localhost:9000/api/v1/users/'+userisid+'/deleteTask/'+taskid
+                        url: 'https://task-managerapp.herokuapp.com/api/v1/users/'+userisid+'/deleteTask/'+taskid
                     }).then(function(response){
                         resolve(response)
                     }).catch(function(error){
@@ -196,7 +196,7 @@
                return $q(function(resolve,reject){
                    $http({
                        method:'GET',
-                       url:'http://localhost:9000/api/v1/users/'+userid+'/tasks/'+taskid
+                       url:'https://task-managerapp.herokuapp.com/api/v1/users/'+userid+'/tasks/'+taskid
 
                    }).then(function(response){
                        resolve(response)
