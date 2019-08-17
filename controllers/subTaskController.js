@@ -1,4 +1,91 @@
-
+/** 
+ * @swagger
+ * tags:
+ *    - name: Task
+ *      description: everything about Task
+ * /api/v1/users/{userid}/tasks/{taskid}/subtasks:
+ *   get:
+ *     tags: 
+ *       - SubTask
+ *     summary: return the tasks of user by id
+ *     produces:
+ *       - application/json 
+ *     parameters:
+ *       - in: path
+ *         name: userid
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: string ID of the contact to get
+ *       - in: path
+ *         name: taskid
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: string ID of the contact to get
+ * 
+ *     responses:
+ *        default:
+ *          description: Default error sample response
+ * 
+ * /api/v1/users/{userid}/tasks/{taskid}/subtasks/{subtasksid}/:
+ *   get: 
+ *     tags: 
+ *       - SubTask
+ *     summary: Add the Task into user of id above
+ *     parameters:
+ *       - in: path
+ *         name: userid
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: string ID of the contact to get
+ *       - in: path
+ *         name: subtasksid
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: string ID of the contact to get
+ *       - in: path
+ *         name: taskid
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: string ID of the contact to get
+ *     responses:
+ *        default:
+ *          description: Default error sample response
+ *
+ * /api/v1/users/{userid}/tasks/{taskid}/deletesubtasks/{subtasksid}:
+ *   delete:
+ *     tags: 
+ *       - SubTask 
+ *     summary: delete the task
+ *     produces:
+ *       - application/json 
+ *     parameters:
+ *       - in: path
+ *         name: userid
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: string ID of the contact to get
+ *       - in: path
+ *         name: subtasksid
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: string ID of the contact to get
+ *       - in: path
+ *         name: taskid
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: string ID of the contact to get 
+ *     responses:
+ *        default:
+ *          description: Default error sample response
+*/
 let service = require('../serviceses/subtaskServices')
 module.exports = class subTaskController {
     constructor(app) {
