@@ -1,8 +1,8 @@
 /** 
  * @swagger
  * tags:
- *    - name: Task
- *      description: everything about Task
+ *    - name: SubTask
+ *      description: everything about SubTask
  * /api/v1/users/{userid}/tasks/{taskid}/subtasks:
  *   get:
  *     tags: 
