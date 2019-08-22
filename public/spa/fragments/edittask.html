@@ -14,4 +14,15 @@
       <input type="Date" class="form-control" ng-model='taskdetails.taskDate'  placeholder="Date">
      
     </div>
+    <div class="form-group"> 
+      <select  ng-model= 'taskdetails.priority'  class="form-control " placeholder="Select Priority">
+          <option  value="High">High</option>
+          <option value="Low">Low</option>
+      </select>
+  </div>
+  
+  <button type="button" ng-click='editTask()' class="btn btn-warning btn-lg">Edit</button>
+  
+  
+
 </section>

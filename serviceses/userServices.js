@@ -39,38 +39,52 @@ let userModel = mongoose.model('User', userSchema)
 
 async function getUsers() {
   let data;
-  let complete = await userModel.find({},{'username':true,'password':true}, (err, res) => {
-    if (err) throw err;
-    data = res;
-    //console.log(data)
+  return new Promise(function(resolve,reject){
+    userModel.find({},{'username':true,'password':true}, (err, res) => {
+      if (err) throw err;
+      data = res;
+      //console.log(data)
+      resolve(res)
+    })
   })
-  return data
+  
+
 }
 async function autheticateUser(username,password){
-  let data;
-  await userModel.find({username:username,password:password},{'_id':true,'userStatus':true},(err,res)=>{
-    if(err) throw err;
-    //console.log(res)
-    data=res;
+  
+  
+  return new Promise(function(resolve,reject){
+    userModel.find({username:username,password:password},{'_id':true,'userStatus':true},(err,res)=>{
+      if(err) throw reject(err);
+      //console.log(res)
+      resolve(res)
+    })
+    
   })
-  return data;
 }
 
 
 async function getUserlogin(id) {
   let data;
+  
   const o_id = new mongo.ObjectID(id);
-  let complete = await userModel.find({
-    _id:o_id
-  }, {
-    'name': true,
-    'username': true,
-    'mobileno': true
-  }, (err, res) => {
-    data = res;
-  })
-  //console.log(data)
-  return data
+
+   var p = new Promise(function(resolve,reject){
+    let complete = userModel.find({
+      _id:o_id
+    }, {
+      'name': true,
+      'username': true,
+      'mobileno': true
+    }, function (err, res){
+      if(err){
+         reject(err)
+      }
+      resolve(res)
+    })
+   });
+  
+   return p;
 }
 module.exports = {
       getUsersService: async () => {
@@ -95,13 +109,13 @@ module.exports = {
     })
     let data;
     user1.save().then(doc => {
-        data=doc
+        return doc
       })
   
       .catch(err => {
-        console.log(err)
+        return err
       })
-      return(data+"stored")
+    
   },
   updateUser:async (id,fname, lname, username, password, mobileno) =>{
     const o_id = new mongo.ObjectID(id); 
@@ -111,8 +125,10 @@ module.exports = {
     }
   let data;
     await userModel.updateOne({_id:o_id},{$set:{name:name,username:username,password:password,mobileno:mobileno}},(err,res)=>{
-      if(err) throw err;
-      data = res
+      if(err) return err;
+      else{
+        return res
+      }
     })
     return data
   },

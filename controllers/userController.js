@@ -65,6 +65,11 @@
  *               - username
  *               - password
  *               -  mobileno
+ *     responses:
+ *        default:
+ *          description: Default error sample response
+ *               
+ *       
  * /api/v1/edituser/{userid}/:
  *   put: 
  *     tags: 
@@ -100,7 +105,11 @@
  *           type: string
  *         required: true
  *         description: string ID of the contact to get
- * 
+ *     responses:
+ *        default:
+ *          description: Default error sample response
+ *                  
+ *      
  * /api/v1/authenticate/:
  *   post: 
  *     tags: 
@@ -178,7 +187,9 @@ module.exports = class Usercontroller {
             let password = request.body.password;
             let username = request.body.username;
             let data = await service.getAutheticateUser(username,password)
-           //console.log(data)
+           if(data=={}){
+              response.send('User Not Found With This Username and Password')
+           }else
             response.send(data)
  
         })

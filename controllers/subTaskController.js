@@ -96,7 +96,7 @@ module.exports = class subTaskController {
         this.app.get('/api/v1/users/:userid/tasks/:taskid/subtasks/', async (request, response) => {
             let taskid = request.params.taskid
             let data = await service.getSubTasks(taskid);
-            console.log(data)
+           // console.log(data)
             response.send(data)
         })
         this.app.get('/api/v1/users/:userid/tasks/:taskid/subtasks/:subtaskid', async (request, response) => {
@@ -115,19 +115,22 @@ module.exports = class subTaskController {
 
         })
         this.app.post('/api/v1/users/:userid/tasks/:taskid/addsubtasks', async (request, response) => {
+            let userid = request.params.userid
             let taskid = request.params.taskid
             let tasktitle = request.body.tasktitle
             let taskdiscription = request.body.taskdiscription
             let priority = request.body.priority
             let taskDate = request.body.taskDate
+          //  console.log(request.body)
             let subtaskobj = {
                 tasktitle: tasktitle,
                 taskdiscription: taskdiscription,
                 priority: priority,
                 taskDate: taskDate
             }
+            //console.log(subtaskobj)
             service.addSubtaskService(taskid, subtaskobj).then(function (result) {
-                    console.log('added')
+                    response.send(result)
                 })
                 .catch(function (err) {
                     console.log('some error occuredd')

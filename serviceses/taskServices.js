@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const mongo = require('mongodb');
 const url = "mongodb+srv://MANISH:MANISH%409797@cluster0-qdzy9.mongodb.net/task-manager"
+
 mongoose.connect(url, {
   useNewUrlParser: true
 })
@@ -39,21 +40,24 @@ let userSchema = new mongoose.Schema({
 })
 let userModel = mongoose.model('Users', userSchema);
 
-async function getTasksOfUser(id) {
+ function getTasksOfUser(id) {
   let data;
-  const o_id = new mongo.ObjectID(id);
-  await userModel.findOne({
-    _id: o_id
-  }, {
-    'Task': 1,
-    _id: 0
-  }, (err, res) => {
-    if (err) throw err;
-    data = res
-    //    console.log(data)
+  return new Promise(function(resolve,reject){
+    const o_id = new mongo.ObjectID(id);
+     userModel.findOne({
+      _id: o_id
+    }, {
+      'Task': 1,
+      _id: 0
+    }, (err, res) => {
+      if (err) reject(err)
+      resolve(res)
+      //    console.log(data)
+    })
+    //   console.log(data)
+  
   })
-  //   console.log(data)
-  return data;
+  
 }
 
 module.exports = {
@@ -78,7 +82,7 @@ module.exports = {
         Task: taskobj
       }
     }, (err, res) => {
-      if (err) throw err
+      if (err) return err
       return res
     })
   },
@@ -93,32 +97,36 @@ module.exports = {
     }, {
       multi: true
     }, (err, res) => {
-      if (err) throw err;
+      if (err) return err;
       return res;
     })
   },
   getSingleTask: async (id) => {
     let data;
-    const o_id = new mongo.ObjectID(id);
-    await userModel.aggregate([{
-      $unwind: "$Task"
-    }, {
-      $match: {
-        'Task._id': {
-          $eq: o_id
+    return new Promise(function(resolve,reject){
+      const o_id = new mongo.ObjectID(id);
+       userModel.aggregate([{
+        $unwind: "$Task"
+      }, {
+        $match: {
+          'Task._id': {
+            $eq: o_id
+          }
         }
-      }
-    }, {
-      $project: {
-        Task: 1,
-        _id: 0
-      }
-    }], (err, res) => {
-      if (err) throw err
+      }, {
+        $project: {
+          Task: 1,
+          _id: 0
+        }
+      }], (err, res) => {
+        if (err)  reject(err)
+  
+        resolve(res)
+      })
+    
 
-      data = res;
     })
-    return data
+    
   },
   editUserTasks: async (id, tasktitle, taskdiscription, taskDate) => {
     const o_id = new mongo.ObjectID(id);
