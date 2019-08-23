@@ -1,0 +1,20 @@
+<section>
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>{{subtask.tasktitle}}</h1>
+            <p>{{subtask.taskdiscription}}</p>
+            <p>
+                {{subtask.taskDate | date : mm/dd/yyyy}}
+            </p>
+        </div>
+
+        <button type="button" id='{{subtask._id}}' ng-click='editRedirect($event)' class="btn btn-large btn-warning">Edit
+            SubTask Details</button>
+
+    </div>
+
+    <button ng-click='backButton()' type="button" class="btn btn-large  btn-primary">Back</button>
+
+
+</section>

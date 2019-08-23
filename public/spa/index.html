@@ -75,6 +75,14 @@
                     templateUrl: 'fragments/subtask.html',
                     controller:'subtaskController'
                 })
+                .when('/subtaskdetails/:subtaskid/',{
+                    templateUrl: 'fragments/subtaskdetail.html',
+                    controller: 'subtaskDetailsController'
+                })
+                .when('/editsubtask/:subtaskid',{
+                         templateUrl: 'fragments/subtaskdetail.html',
+                         controller: 'editSubtaskController'
+                 })
 
         }])
         app.factory('taskService', function ($q, $http, $window, $location) {
@@ -265,6 +273,19 @@
                     })
                 })
             }
+            obj.getsubtakbyId = function(userid,taskid,subtaskid){
+                return $q(function(resolve,reject){
+                    $http({
+                        method:'GET',
+                        url:'http://localhost:9000/api/v1/users/'+userid+'/tasks/'+taskid+'/subtasks/'+subtaskid
+                    }).then(function(result){
+                        resolve(result)
+                    }).catch(function(error){
+                        reject(error)
+                    })
+                })
+            }
+        
             return obj;
         })
         app.controller('loginController', function ($scope, $rootScope, $localStorage, taskService, $location) {
@@ -484,6 +505,40 @@
                     printSubtask();
                 })
             }
+        })
+
+        app.controller('subtaskDetailsController',function($localStorage,$scope,$routeParams,taskService,$rootScope,$location){
+            let subtaskid = $routeParams.subtaskid;
+            $rootScope.loginstate = $localStorage.loginflag;
+            
+             taskService.getsubtakbyId($localStorage.Id,$localStorage.taskid,subtaskid).then(function(result){
+                   console.log(result)
+
+                $scope.subtask = result.data;
+               }).catch(function(error){
+                   console.log(error)
+               })
+               $scope.editRedirect=function(event){
+                   let id = $routeParams.subtaskid
+                   $location.path('/editsubtask/'+id)
+               }
+               $scope.backButton = function(){
+                   $location.path('/subtasks')
+               }
+        })
+
+        app.controller('editSubtaskController',function($localStorage,$scope,$routeParams,$rootScope,taskService){
+            let subtaskid = $routeParams.subtaskid;
+            $rootScope.loginstate = $localStorage.loginflag;
+            
+            taskService.getsubtakbyId($localStorage.Id,$localStorage.taskid,subtaskid).then(function(result){
+                   console.log(result)
+
+                   $scope.subtaskdetails  = result.data;
+               }).catch(function(error){
+                   console.log(error)
+               })
+
         })
 
 

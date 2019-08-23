@@ -160,7 +160,7 @@ module.exports = class Usercontroller {
         })
         this.app.get('/api/v1/user/:userid/', async (request, response) => {
             let id = request.params.userid;
-            
+
             let data = await getUser(id)
             response.send(data)
         })
@@ -170,29 +170,29 @@ module.exports = class Usercontroller {
             let username = request.body.username
             let password = request.body.password
             let mobileno = request.body.mobileno
-         let data=service.addUser(fname, lname, username, password, mobileno)
-         response.send(data)
+            let data = service.addUser(fname, lname, username, password, mobileno)
+            response.send(data)
         })
-        this.app.put('/api/v1/edituser/:userid/',async(request,response)=>{
+        this.app.put('/api/v1/edituser/:userid/', async (request, response) => {
             let id = request.params.userid
             let fname = request.body.fname
             let lname = request.body.lname
             let username = request.body.username
             let password = request.body.password
             let mobileno = request.body.mobileno
-           let data = service.updateUser(id,fname, lname, username, password, mobileno)
-           response.send(data)
+            let data = service.updateUser(id, fname, lname, username, password, mobileno)
+            response.send(data)
         })
-        this.app.post('/api/v1/authenticate/',async(request,response)=>{
+        this.app.post('/api/v1/authenticate/', async (request, response) => {
             let password = request.body.password;
             let username = request.body.username;
-            let data = await service.getAutheticateUser(username,password)
-           if(data=={}){
-              response.send('User Not Found With This Username and Password')
-           }else
-            response.send(data)
- 
+            let data = await service.getAutheticateUser(username, password)
+            if (data == {}) {
+                response.send('User Not Found With This Username and Password')
+            } else
+                response.send(data)
+
         })
-        
+
     }
 }
