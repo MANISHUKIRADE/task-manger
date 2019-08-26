@@ -1,20 +1,20 @@
-<section >
+<section class="container" >
     <form name="loginForm" novalidate>
 
   <div class="form-group">
     <label for="username">Username</label>
     <input type="text" ng-model='username' name="username" id="usernameid" class="form-control" placeholder="username" ng-required="true" />
-    <span ng-show="loginForm.username.$touched && loginForm.username.$error.required">Username name is required.</span><br /><br />
+    <span ng-show="loginForm.username.$touched && loginForm.username.$error.required">Username  is required.</span><br /><br />
   </div>
   <div class="form-group">
     <label for="">Password</label>
     <input type="password" ng-model='password' name="password" id="passwordid" class="form-control" placeholder="enter Password" ng-required="true" />
-    <span ng-show="loginForm.password.$touched && loginForm.password.$error.required">Password name is required.</span>
+    <span ng-show="loginForm.password.$touched && loginForm.password.$error.required">Password  is required.</span>
   </div>  
   
   <div class="form-group">
-      <div class="col-sm-12 col-sm-offset-10">
-          <button ng-hide=" loginForm.password.$error.required " ng-hide= "loginForm.username.$error.required" type="submit" ng-click='login()'  class="btn lg-button btn-success">Login</button>
+      <div>
+          <button ng-hide=" loginForm.password.$error.required " ng-hide= "loginForm.username.$error.required" type="submit" ng-click='login()'  class="btn btn btn-large btn-block  btn-success">Login</button>
       </div>
   </div>
   </form>

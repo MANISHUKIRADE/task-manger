@@ -86,7 +86,7 @@ class SubTaskServices {
              
         });
     }
-    updateSubTask(userId, taskId, subTaskId, newData) {
+    updateSubtask(userId, taskId, subTaskId, newData) {
         newData._id = subTaskId;
         return new Promise((resolve, reject) => {
             this.deleteSubTask(userId, taskId, subTaskId)

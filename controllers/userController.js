@@ -160,7 +160,7 @@ module.exports = class Usercontroller {
         })
         this.app.get('/api/v1/user/:userid/', async (request, response) => {
             let id = request.params.userid;
-
+         console.log(request.user)
             let data = await getUser(id)
             response.send(data)
         })

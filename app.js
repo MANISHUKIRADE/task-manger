@@ -4,6 +4,8 @@ const usercontroller = require('./controllers/userController')
 const taskController = require('./controllers/taskController')
 const subtaskController = require('./controllers/subTaskController')
 const cors = require('cors')
+const Auth = require('./Auth/jwtToken')
+
 //const port = 9000;
 const port = process.env.PORT || 9000 ;
 let app = express();
@@ -14,6 +16,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(express.static('public'))
 let server = require('http').createServer(app)
+let auth = new Auth(app)
 let usercontrol = new usercontroller(app)
 let taskcontrol = new taskController(app)
 let subtaskcontrol = new subtaskController(app)

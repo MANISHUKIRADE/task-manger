@@ -85,7 +85,7 @@
  *     responses:
  *        default:
  *          description: Default error sample response
-*/
+ */
 
 let Service = require('../serviceses/subtaskServices')
 let service = new Service();
@@ -98,15 +98,15 @@ module.exports = class subTaskController {
         this.app.get('/api/v1/users/:userid/tasks/:taskid/subtasks/', async (request, response) => {
             let taskid = request.params.taskid
             let userid = request.params.userid
-            let data = await service.getSubTasks(userid,taskid)
-           // console.log(data)
+            let data = await service.getSubTasks(userid, taskid)
+            // console.log(data)
             response.send(data)
         })
         this.app.get('/api/v1/users/:userid/tasks/:taskid/subtasks/:subtaskid', async (request, response) => {
             let userid = request.params.userid
             let taskid = request.params.taskid;
             let subtaskid = request.params.subtaskid;
-            let data = await service.getSubTaskById(userid,taskid,subtaskid)
+            let data = await service.getSubTaskById(userid, taskid, subtaskid)
             console.log(data)
             response.send(data)
         })
@@ -114,7 +114,7 @@ module.exports = class subTaskController {
             let userid = request.params.userid
             let subtaskid = request.params.subtaskid;
             let taskid = request.params.taskid
-            service.deleteSubTask(userid,taskid, subtaskid).then(function (result) {
+            service.deleteSubTask(userid, taskid, subtaskid).then(function (result) {
                 response.send(result)
             })
 
@@ -126,7 +126,7 @@ module.exports = class subTaskController {
             let taskdiscription = request.body.taskdiscription
             let priority = request.body.priority
             let taskDate = request.body.taskDate
-          //  console.log(request.body)
+            //  console.log(request.body)
             let subtaskobj = {
                 tasktitle: tasktitle,
                 taskdiscription: taskdiscription,
@@ -134,8 +134,8 @@ module.exports = class subTaskController {
                 taskDate: taskDate
             }
             //console.log(subtaskobj)
-            
-            service.addSubTask(userid,taskid, subtaskobj).then(function (result) {
+
+            service.addSubTask(userid, taskid, subtaskobj).then(function (result) {
                     response.send(result)
                 })
                 .catch(function (err) {
@@ -146,7 +146,7 @@ module.exports = class subTaskController {
         this.app.put('/api/v1/users/:userid/tasks/:taskid/editsubtasks/:subtaskid', (request, response) => {
             let taskid = request.params.taskid
             let subtaskid = request.params.subtaskid
-             let userid = request.params.userid
+            let userid = request.params.userid
             let tasktitle = request.body.tasktitle
             let taskdiscription = request.body.taskdiscription
             let priority = request.body.priority
@@ -157,10 +157,13 @@ module.exports = class subTaskController {
                 priority: priority,
                 taskDate: taskDate
             }
-            service.updateSubtask(userid,taskid,subtaskid,subtaskobj).then(function (result) {
-                console.log(result)
-            })
-            response.send('updated')
+            service.updateSubtask(userid, taskid, subtaskid, subtaskobj).then(function (result) {
+                    response.send(result)
+                })
+                .catch(function (err) {
+                    response.send(err)
+                })
+
         })
     }
 }

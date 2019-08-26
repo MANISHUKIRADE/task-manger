@@ -80,7 +80,7 @@
                     controller: 'subtaskDetailsController'
                 })
                 .when('/editsubtask/:subtaskid',{
-                         templateUrl: 'fragments/subtaskdetail.html',
+                         templateUrl: 'fragments/editsubtask.html',
                          controller: 'editSubtaskController'
                  })
 
@@ -281,6 +281,20 @@
                     }).then(function(result){
                         resolve(result)
                     }).catch(function(error){
+                        reject(error)
+                    })
+                })
+            }
+            obj.editSubask = function(userid,taskid,subtaskid,subtaskdata){
+                return $q(function(resolve,reject){
+                    $http({
+                        method:'PUT',
+                        url:'http://localhost:9000/api/v1/users/'+userid+'/tasks/'+taskid+'/editsubtasks/'+subtaskid,
+                        data:subtaskdata
+                    }).then(function(result){
+                        resolve(result)
+                    })
+                    .catch(function(error){
                         reject(error)
                     })
                 })
@@ -532,12 +546,18 @@
             $rootScope.loginstate = $localStorage.loginflag;
             
             taskService.getsubtakbyId($localStorage.Id,$localStorage.taskid,subtaskid).then(function(result){
-                   console.log(result)
+                   console.log(result.data)
 
                    $scope.subtaskdetails  = result.data;
                }).catch(function(error){
                    console.log(error)
                })
+               $scope.editSubTask= function(){
+                   taskService.editSubask($localStorage.Id,$localStorage.taskid,subtaskid,$scope.subtaskdetails)
+                   .then(function(result){
+                       $location('//subtaskdetails/'+subtaskid)
+                   })
+               }
 
         })
 
