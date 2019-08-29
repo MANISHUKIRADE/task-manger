@@ -98,6 +98,7 @@ module.exports = class subTaskController {
         this.app.get('/api/v1/users/:userid/tasks/:taskid/subtasks/', async (request, response) => {
             let taskid = request.params.taskid
             let userid = request.params.userid
+            
             let data = await service.getSubTasks(userid, taskid)
             // console.log(data)
             response.send(data)

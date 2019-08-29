@@ -1,4 +1,4 @@
-<section>
+<section class="container">
     <table style="font-size: 20px;" class="text-center table table-striped table-bordered table-hover ">
         <thead>
             <tr>
@@ -14,8 +14,8 @@
         <tbody>
             <tr ng-repeat="task in tasksData">
                 <td>
-                    <button id='{{task._id}}' ng-click='deleteTask($event)' type="button"
-                        class="btn   btn-danger">Delete</button>
+                    <button id='{{task._id}}' ng-click='deleteTask($event)' type="button" class="btn   btn-danger">
+                        <span class="glyphicon glyphicon-remove"></span> Remove</button>
                 </td>
                 <td> <a href="#!/taskdetails/{{task._id}}">{{task.tasktitle}}</a> </td>
                 <td>{{task.taskdiscription}}</td>
@@ -24,16 +24,19 @@
                 <td>{{task.taskDate | date : mm/dd/yyyy }}</td>
 
             </tr>
-            <tr>
+            <tr >
+                <form class="form-inline">
                 <td>
-                    Add New Task
-                    <p>
-                        <button type="button" class="btn btn-sm btn-success" ng-click='addTask()'>Add Task</button>
-                    </p>
+                    <div class="form-group">
+                        <p>
+                            <button type="button" class="btn  btn-success" ng-click='addTask()'>
+                                <span class="glyphicon glyphicon-plus-sign"></span> Add Task</button>
+                        </p>
+                    </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <label for="Title"></label>
+                        
                         <input type="text" ng-model='tasktitle' class="form-control" aria-describedby="helpId"
                             placeholder="Enter Title of Your Task">
 
@@ -42,30 +45,42 @@
 
                 <td>
                     <div class="form-group">
-                        <label for="Description"></label>
+                        
                         <input type="text" ng-model='taskdiscription' class="form-control" aria-describedby="helpId"
                             placeholder="Enter Description of Your task">
 
                     </div>
                 </td>
                 <td>
-                    <div class="form-group"> 
-                        <select ng-model='priority'  class="form-control " placeholder="Select Priority">
-                            <option  value="High">High</option>
+                    <div class="form-group">
+                        <select ng-model='priority' class="form-control " placeholder="Select Priority">
+                            <option value="High">High</option>
                             <option value="Low">Low</option>
                         </select>
                     </div>
                 </td>
                 <td>
 
-                    <div class="form-group"> 
-                        <label for="Date"></label>
+                    <div class="form-group">
+                        
                         <div>
-                            <input type="date" ng-model='taskDate' class="form-control" value="" required="required">
+                                <input id="datepicker" ng-model='taskDate' class="form-control" width="270" required="required" />
+                           
                         </div>
                     </div>
                 </td>
+                </form>
             </tr>
         </tbody>
     </table>
+    <br>
+    <br><br>
+    <a name="" id="" class="btn btn-primary" href="#!/user/" role="button">
+        <span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+
 </section>
+<script>
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap'
+        });
+    </script>

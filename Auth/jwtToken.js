@@ -13,6 +13,8 @@ module.exports = class AuthUser {
             secret: jwtSecret,
             credentialsRequired: false
         }));
+
+        
         this.app.post('/login/', async (request, response) => {
             let password = request.body.password;
             let username = request.body.username;

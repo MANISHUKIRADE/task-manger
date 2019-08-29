@@ -1,14 +1,19 @@
-<section class="container" >
+<section class="container" style="width:400px;margin:auto"  >
+  <div class="well" ng-show=" loginForm.password.$error.required " ng-show= "loginForm.username.$error.required">
+        <p>Enter Your Details Login Button Automatcally appears</p>
+  </div>
     <form name="loginForm" novalidate>
 
   <div class="form-group">
-    <label for="username">Username</label>
+    <label for="username">Username:</label>
     <input type="text" ng-model='username' name="username" id="usernameid" class="form-control" placeholder="username" ng-required="true" />
     <span ng-show="loginForm.username.$touched && loginForm.username.$error.required">Username  is required.</span><br /><br />
   </div>
   <div class="form-group">
-    <label for="">Password</label>
-    <input type="password" ng-model='password' name="password" id="passwordid" class="form-control" placeholder="enter Password" ng-required="true" />
+    <label for="">Password:</label>
+    <input type="{{inputType}}" ng-model='password' name="password" id="passwordid" class="form-control" placeholder="enter Password" ng-required="true" /><input type="checkbox" id="checkbox" ng-model="passwordCheckbox" ng-click="hideShowPassword()" />
+    <label for="checkbox" ng-if="passwordCheckbox">Hide password</label>
+    <label for="checkbox" ng-if="!passwordCheckbox">Show password</label>
     <span ng-show="loginForm.password.$touched && loginForm.password.$error.required">Password  is required.</span>
   </div>  
   

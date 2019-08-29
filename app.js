@@ -6,13 +6,14 @@ const subtaskController = require('./controllers/subTaskController')
 const cors = require('cors')
 const Auth = require('./Auth/jwtToken')
 
-//const port = 9000;
 const port = process.env.PORT || 9000 ;
 let app = express();
 app.use(cors())
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+
+
 app.use(bodyParser.json());
 app.use(express.static('public'))
 let server = require('http').createServer(app)

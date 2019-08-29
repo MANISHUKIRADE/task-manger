@@ -1,4 +1,8 @@
 <section class="container">
+        <div class="well" ng-show="editProf.password.$error.required" ng-show="editProf.username.$error.required" ng-show="editProf.mobileno.$error.required" ng-show="editProf.fname.$error.required" ng-show="editProf.lname.$error.required">
+                <p>Enter Your Details Edit Button Automatcally appears</p>
+                <p>In case You have to not Edit Your Profile Press Back Button</p>
+          </div>
     <form name="editProf">
     <div class="form-group">
         <label for="fname">First Name</label>
@@ -42,4 +46,8 @@
     </div>
     <button type="button"  ng-click='editUser()' class="btn btn-large btn-block btn-primary" ng-hide="editProf.password.$error.required" ng-hide="editProf.username.$error.required" ng-hide="editProf.mobileno.$error.required" ng-hide="editProf.fname.$error.required" ng-hide="editProf.lname.$error.required" >Edit Profile</button>
 </form>
+<br>
+<br>
+<a name="" id="" class="btn btn-primary" href="#!/user/" role="button"> 
+    <span class="glyphicon glyphicon-chevron-left"></span>  Back</a>
 </section>

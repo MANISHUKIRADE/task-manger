@@ -8,33 +8,33 @@ mongoose.connect(url, {
 
 let userSchema = new mongoose.Schema({
   name: {
-    fname: String,
-    lname: String
+      fname: String,
+      lname: String
   },
   username: String,
   password: String,
   mobileno: String,
   registerdate: Date,
   userStatus: {
-    type: Boolean,
-    default: true
+      type: Boolean,
+      default: true
   },
   Task: [{
-    priority: String,
-    tasktitle: String,
-    taskdiscription: String,
-    taskcreated: Date,
-    taskDate: Date,
-    //  status: Boolean,
-
-    subtask: [{
       priority: String,
       tasktitle: String,
       taskdiscription: String,
       taskcreated: Date,
       taskDate: Date,
-      //    status: Boolean
-    }]
+//      status: Boolean,
+
+      subtask: [{
+          priority: String,
+          tasktitle: String,
+          taskdiscription: String,
+          taskcreated: Date,
+          taskDate: Date,
+  //        status: Boolean
+      }]
   }]
 
 })

@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 
 <head>
+    <style>
+                           
+    </style>
     <title>TaskManager</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
 </head>
 
 <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+
 
 <body ng-app='TaskApp'>
 
@@ -33,18 +43,18 @@
     <script src="./angular.js"></script>
     <script src="./angular-route.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
     <script>
         let app = angular.module('TaskApp', ['ngRoute', 'ngStorage'])
-
         app.config(['$routeProvider', function ($routeProvider) {
             $routeProvider.when('/login', {
-                    templateUrl: "fragments/login.html",
-                    controller: "loginController"
-                })
+                templateUrl: "fragments/login.html",
+                controller: "loginController"
+            })
                 .when('/register', {
                     templateUrl: "fragments/register.html",
-                    controller: "registerController"
+                    controller: "regiszterController"
                 })
                 .when('/user/', {
                     templateUrl: 'fragments/user.html',
@@ -63,28 +73,29 @@
                     controller: 'logoutController'
 
                 })
-                .when('/taskdetails/:taskid',{
+                .when('/taskdetails/:taskid', {
                     templateUrl: 'fragments/taskdetails.html',
-                    controller:  'taskDetailsController'
+                    controller: 'taskDetailsController'
                 })
-                .when('/edittask/:taskid',{
+                .when('/edittask/:taskid', {
                     templateUrl: 'fragments/edittask.html',
                     controller: 'editTaskController'
                 })
-                .when('/subtasks/',{
+                .when('/subtasks/', {
                     templateUrl: 'fragments/subtask.html',
-                    controller:'subtaskController'
+                    controller: 'subtaskController'
                 })
-                .when('/subtaskdetails/:subtaskid/',{
+                .when('/subtaskdetails/:subtaskid/', {
                     templateUrl: 'fragments/subtaskdetail.html',
                     controller: 'subtaskDetailsController'
                 })
-                .when('/editsubtask/:subtaskid',{
-                         templateUrl: 'fragments/editsubtask.html',
-                         controller: 'editSubtaskController'
-                 })
+                .when('/editsubtask/:subtaskid', {
+                    templateUrl: 'fragments/editsubtask.html',
+                    controller: 'editSubtaskController'
+                })
 
         }])
+
         app.factory('taskService', function ($q, $http, $window, $location) {
             let obj = {};
             obj.authenticateUser = function (username, password) {
@@ -96,7 +107,7 @@
 
                     $http({
                         method: 'POST',
-                        url: 'http://localhost:9000/api/v1/authenticate/',
+                        url: '/api/v1/authenticate/',
                         data: loginData
                     }).then(function (response) {
                         let data = response.data;
@@ -121,14 +132,14 @@
             }
             obj.registerUser = function (user) {
                 return $q(function (resolve, response) {
-                        $http({
-                            method: 'POST',
-                            url: 'http://localhost:9000/api/v1/adduser/',
-                            data: user
-                        })
-                    }).then(function (response) {
-                        resolve('data Added Successfully')
+                    $http({
+                        method: 'POST',
+                        url: '/api/v1/adduser/',
+                        data: user
                     })
+                }).then(function (response) {
+                    resolve('data Added Successfully')
+                })
                     .catch(function (error) {
                         reject("some error ocuures")
                     })
@@ -137,7 +148,7 @@
                 return $q(function (resolve, reject) {
                     $http({
                         method: 'GET',
-                        url: 'http://localhost:9000/api/v1/user/' + id,
+                        url: '/api/v1/user/' + id,
 
                     }).then(function (response) {
                         //                           console.log(response)
@@ -156,7 +167,7 @@
                 return $q(function (resolve, reject) {
                     $http({
                         method: 'PUT',
-                        url: 'http://localhost:9000/api/v1/edituser/' + id,
+                        url: '/api/v1/edituser/' + id,
                         data: userdata
                     }).then(function (response) {
                         console.log('edited')
@@ -170,7 +181,7 @@
                 return $q(function (resolve, reject) {
                     $http({
                         method: 'GET',
-                        url: 'http://localhost:9000/api/v1/users/' + id + '/tasks/'
+                        url: '/api/v1/users/' + id + '/tasks/'
                     }).then(function (response) {
 
                         resolve(response.data)
@@ -184,7 +195,7 @@
                 return $q(function (resolve, reject) {
                     $http({
                         method: 'POST',
-                        url: 'http://localhost:9000/api/v1/users/' + userid + '/addtasks/',
+                        url: '/api/v1/users/' + userid + '/addtasks/',
                         data: taskobj
                     }).then(function (response) {
                         resolve(response)
@@ -193,118 +204,126 @@
                     })
                 })
             }
-            obj.deleteTaskservice = function(userisid,taskid){
-                return $q(function(resolve,reject){
+            obj.deleteTaskservice = function (userisid, taskid) {
+                return $q(function (resolve, reject) {
                     $http({
-                        method:'DELETE',
-                        url: 'http://localhost:9000/api/v1/users/'+userisid+'/deleteTask/'+taskid
-                    }).then(function(response){
+                        method: 'DELETE',
+                        url: '/api/v1/users/' + userisid + '/deleteTask/' + taskid
+                    }).then(function (response) {
+                        console.log(response)
                         resolve(response)
-                    }).catch(function(error){
-                      reject(error)
-                    })
-                })
-            }
-            obj.getTask = function(userid,taskid){
-               return $q(function(resolve,reject){
-                   $http({
-                       method:'GET',
-                       url:'http://localhost:9000/api/v1/users/'+userid+'/tasks/'+taskid
-
-                   }).then(function(response){
-                       resolve(response)
-                   }).catch(function(error){
-                       reject(error)
-                   })
-               })
-
-            }
-
-            obj.updateTask = function(userid,taskid,taskobj){
-                return $q(function(resolve,reject){
-                    $http({
-                        method:'PUT',
-                        url:'http://localhost:9000/api/v1/users/'+userid+'/edittasks/'+taskid,
-                        data:taskobj
-                    }).then(function(response){
-                        resolve(response)
-                    })
-                    .catch(function(error){
+                    }).catch(function (error) {
                         reject(error)
                     })
                 })
             }
-
-            obj.getSubtasks = function(userid,taskid){
-                return $q(function(resolve,reject){
+            obj.getTask = function (userid, taskid) {
+                return $q(function (resolve, reject) {
                     $http({
-                        method:'GET',
-                        url:'http://localhost:9000/api/v1/users/'+userid+'/tasks/'+taskid+'/subtasks/'
-                    }).then(function(response){
+                        method: 'GET',
+                        url: '/api/v1/users/' + userid + '/tasks/' + taskid
+
+                    }).then(function (response) {
+                        resolve(response)
+                    }).catch(function (error) {
+                        reject(error)
+                    })
+                })
+
+            }
+
+            obj.updateTask = function (userid, taskid, taskobj) {
+                return $q(function (resolve, reject) {
+                    $http({
+                        method: 'PUT',
+                        url: '/api/v1/users/' + userid + '/edittasks/' + taskid,
+                        data: taskobj
+                    }).then(function (response) {
                         resolve(response)
                     })
-                    .catch(function(error){
-                        reject(error)
-                    })
+                        .catch(function (error) {
+                            reject(error)
+                        })
                 })
             }
-            obj.addSubtask = function(userid,taskid,subtaskobj){
-                return $q(function(resolve,reject){
+
+            obj.getSubtasks = function (userid, taskid) {
+                return $q(function (resolve, reject) {
                     $http({
-                        method:'POST',
-                        url:'http://localhost:9000/api/v1/users/'+userid+'/tasks/'+taskid+'/addsubtasks',
-                        data:subtaskobj
-                    }).then(function(result){
-                        resolve(result)
-                    }).catch(function(error){
-                        reject(error)
+                        method: 'GET',
+                        url: '/api/v1/users/' + userid + '/tasks/' + taskid + '/subtasks/'
+                    }).then(function (response) {
+                        resolve(response)
                     })
+                        .catch(function (error) {
+                            reject(error)
+                        })
                 })
             }
-            obj.deleteSubtask = function(userid,taskid,subtaskid){
-                return $q(function(resolve,reject){
+            obj.addSubtask = function (userid, taskid, subtaskobj) {
+                return $q(function (resolve, reject) {
                     $http({
-                        method:'DELETE',
-                        url:'http://localhost:9000/api/v1/users/'+userid+'/tasks/'+taskid+'/deletesubtasks/'+subtaskid
-                    }).then(function(result){
+                        method: 'POST',
+                        url: '/api/v1/users/' + userid + '/tasks/' + taskid + '/addsubtasks',
+                        data: subtaskobj
+                    }).then(function (result) {
                         resolve(result)
-                    }).catch(function(error){
+                    }).catch(function (error) {
                         reject(error)
                     })
                 })
             }
-            obj.getsubtakbyId = function(userid,taskid,subtaskid){
-                return $q(function(resolve,reject){
+            obj.deleteSubtask = function (userid, taskid, subtaskid) {
+                return $q(function (resolve, reject) {
                     $http({
-                        method:'GET',
-                        url:'http://localhost:9000/api/v1/users/'+userid+'/tasks/'+taskid+'/subtasks/'+subtaskid
-                    }).then(function(result){
+                        method: 'DELETE',
+                        url: '/api/v1/users/' + userid + '/tasks/' + taskid + '/deletesubtasks/' + subtaskid
+                    }).then(function (result) {
                         resolve(result)
-                    }).catch(function(error){
+                    }).catch(function (error) {
                         reject(error)
                     })
                 })
             }
-            obj.editSubask = function(userid,taskid,subtaskid,subtaskdata){
-                return $q(function(resolve,reject){
+            obj.getsubtakbyId = function (userid, taskid, subtaskid) {
+                return $q(function (resolve, reject) {
                     $http({
-                        method:'PUT',
-                        url:'http://localhost:9000/api/v1/users/'+userid+'/tasks/'+taskid+'/editsubtasks/'+subtaskid,
-                        data:subtaskdata
-                    }).then(function(result){
+                        method: 'GET',
+                        url: '/api/v1/users/' + userid + '/tasks/' + taskid + '/subtasks/' + subtaskid
+                    }).then(function (result) {
                         resolve(result)
-                    })
-                    .catch(function(error){
+                    }).catch(function (error) {
                         reject(error)
                     })
                 })
             }
-        
+            obj.editSubask = function (userid, taskid, subtaskid, subtaskdata) {
+                return $q(function (resolve, reject) {
+                    $http({
+                        method: 'PUT',
+                        url: '/api/v1/users/' + userid + '/tasks/' + taskid + '/editsubtasks/' + subtaskid,
+                        data: subtaskdata
+                    }).then(function (result) {
+                        resolve(result)
+                    })
+                        .catch(function (error) {
+                            reject(error)
+                        })
+                })
+            }
+
             return obj;
         })
         app.controller('loginController', function ($scope, $rootScope, $localStorage, taskService, $location) {
             $scope.username;
             $scope.password;
+            $scope.inputType = 'password'
+            $scope.hideShowPassword = function () {
+                if ($scope.inputType == 'password')
+                    $scope.inputType = 'text';
+                else
+                    $scope.inputType = 'password';
+            };
 
             $scope.login = function () {
                 let username = $scope.username;
@@ -334,30 +353,35 @@
                 $location.path('/user/tasks/')
             }
         })
-        app.controller('registerController', function ($scope, $rootScope, $location,taskService) {
+        app.controller('registerController', function ($scope, $rootScope, $location, taskService) {
             $scope.fname;
             $scope.lname;
             $scope.username;
             $scope.password;
             $scope.mobileno;
             $scope.registerUser = function () {
-                let user = {
-                    name: {
-                        fname: $scope.fname,
-                        lname: $scope.lname
-                    },
-                    username: $scope.username,
-                    password: $scope.password,
-                    mobileno: $scope.mobileno
-                }
-                taskService.registerUser(user).then(function (result) {
-                    console.log(result)
-                }).catch(function (error) {
-                    console.log(error)
-                })
-				$location.path('/login/')
-            }
+                if (($scope.fname != null) && ($scope.fname != '') && ($scope.lname != null) && ($scope.lname != '') && ($scope.username != null) && ($scope.username != '') && ($scope.password != null) && ($scope.password != '') && ($scope.mobileno != null) && ($scope.mobileno != '')) {
+                    let user = {
+                        name: {
+                            fname: $scope.fname,
+                            lname: $scope.lname
+                        },
+                        username: $scope.username,
+                        password: $scope.password,
+                        mobileno: $scope.mobileno
+                    }
+                    taskService.registerUser(user).then(function (result) {
 
+                        $location.path('/login/')
+
+                    }).catch(function (error) {
+                        console.log(error)
+                    })
+
+                } else {
+                    alert('Enter The Correct Details')
+                }
+            }
         })
         app.controller('editUserController', function ($scope, $rootScope, $localStorage, $location, taskService) {
             $rootScope.loginstate = $localStorage.loginflag;
@@ -393,47 +417,62 @@
             function loadTask() {
                 taskService.getUsersTasks($localStorage.Id).then(function (result) {
                     $scope.tasksData = result
-                   console.log(result)
+                    console.log(result)
                 })
 
             }
             loadTask();
             $scope.addTask = function () {
-                let taskobj = {
-                    tasktitle: $scope.tasktitle,
-                    taskdiscription: $scope.taskdiscription,
-                    taskDate: $scope.taskDate,
-                    priority:$scope.priority
-                
+                if (($scope.tasktitle == '') && ($scope.tasktitle == null)) {
+                    alert('Enter the Task Title')
+                } else if (($scope.taskdiscription == '') && ($scope.taskdiscription == null)) {
+                    alert('Enter the Task Description')
+                } else if (($scope.taskDate == '') && ($scope.taskDate == null)) {
+                    alert('Select the Task Date')
+                } else if (($scope.priority == '') && ($scope.priority == null)) {
+                    alert('Select the priority')
+                } else if (($scope.tasktitle != '') && ($scope.tasktitle != null) && ($scope.priority != '') && ($scope.priority != null) && ($scope.taskDate != '') && ($scope.taskDate != null) && ($scope.taskdiscription != '') && ($scope.taskdiscription != null)) {
 
+                    let taskobj = {
 
+                        tasktitle: $scope.tasktitle,
+                        taskdiscription: $scope.taskdiscription,
+                        taskDate: $scope.taskDate,
+                        priority: $scope.priority,
+                    }
+                    $scope.tasktitle = null
+                    $scope.taskdiscription = null
+                    $scope.taskDate = null
+                    $scope.priority = null
+
+                    taskService.addTask($localStorage.Id, taskobj).then(function (result) {
+                        console.log(result)
+                        loadTask();
+                    }).catch(function (error) {
+                        console.log(error)
+                        alert('Some Error')
+                    })
+                } else {
+                    alert('Enter Details')
                 }
-                $scope.tasktitle=null
-                $scope.taskdiscription=null
-                $scope.taskDate=null
-                $scope.priority=null
 
-                taskService.addTask($localStorage.Id, taskobj).then(function (result) {
-                    console.log(result)
-                    loadTask();
-                }).catch(function (error) {
-                    console.log(error)
-                    alert('Some Error')
-                })
-                
             }
-            $scope.deleteTask = function(event){
-                    let id = event.target.id
-                    taskService.deleteTaskservice($localStorage.Id,id).then(function(result){
+            $scope.deleteTask = function (event) {
+                let id = event.target.id
+                if (getConfirmation() == true) {
+                    taskService.deleteTaskservice($localStorage.Id, id).then(function (result) {
                         console.log(result)
                         loadTask()
-                    }).catch(function(error){
+                    }).catch(function (error) {
                         console.log(error)
                         alert('Some Error')
                     })
                 }
+            }
 
-                
+
+
+
         })
         app.controller('logoutController', function ($rootScope, $location, $localStorage) {
             $localStorage.loginflag = false
@@ -442,124 +481,149 @@
             delete $localStorage.Id;
             $location.path('/login/')
         })
-        app.controller('taskDetailsController',function($scope,$localStorage,$routeParams,$location,taskService,$rootScope){
+        app.controller('taskDetailsController', function ($scope, $localStorage, $routeParams, $location, taskService, $rootScope) {
             let id = $routeParams.taskid;
             $rootScope.loginstate = $localStorage.loginflag;
             $localStorage.taskid = id;
-               taskService.getTask($localStorage.Id,id).then(function(result){
-                   console.log(result)
+            taskService.getTask($localStorage.Id, id).then(function (result) {
+                console.log(result)
                 $scope.task = result.data;
-               }).catch(function(error){
-                   console.log(error)
-               })
-               $scope.editRedirect = function(event){
-                   let id = event.target.id
-                   $location.path('/edittask/'+id)
-               }
-               $scope.getSubtasks = function(){
-                   $location.path('/subtasks/')
-               }
-
-        })
-        app.controller('editTaskController',function($localStorage,$rootScope,$routeParams,$location,taskService,$scope){
-            let id = $routeParams.taskid
-            $rootScope.loginstate = $localStorage.loginflag;
-            taskService.getTask($localStorage.Id,id).then(function(result){
-                   console.log(result)
-                $scope.taskdetails = result.data;
-                console.log(result.data)
-               }).catch(function(error){
-                   console.log(error)
-               })
-               $scope.editTask = function(){
-                   taskService.updateTask($localStorage,id,$scope.taskdetails).then(function(result){
-                       console.log(result)
-                   })
-                   .catch(function(error){
-                       console.log(error)
-                   })
-                  $location.path('/taskdetails/'+id)
-               }
-
-        })
-        app.controller('subtaskController',function($localStorage,$scope,$rootScope,taskService,$location){
-            $rootScope.loginstate = $localStorage.loginflag;
-            function printSubtask(){
-                taskService.getSubtasks($localStorage.Id,$localStorage.taskid).then(function(result){
-                console.log(result.data)
-              
-                $scope.subtasksData= result.data;
-            })
-            .catch(function(error){
+            }).catch(function (error) {
                 console.log(error)
             })
+            $scope.editRedirect = function (event) {
+                let id = event.target.id
+                $location.path('/edittask/' + id)
             }
-            $scope.deleteSubtask= function(event) {
-                     let id = event.target.id;
-                     taskService.deleteSubtask($localStorage.Id,$localStorage.taskid,id).then(function(result){
-                         printSubtask();
-                     })
+            $scope.getSubtasks = function () {
+                $location.path('/subtasks/')
+            }
+
+        })
+        app.controller('editTaskController', function ($localStorage, $rootScope, $routeParams, $location, taskService, $scope) {
+            let id = $routeParams.taskid
+            $rootScope.loginstate = $localStorage.loginflag;
+            taskService.getTask($localStorage.Id, id).then(function (result) {
+                console.log(result)
+                result.data.taskDate = new Date(result.data.taskDate)
+                $scope.taskdetails = result.data;
+                console.log(result.data)
+            }).catch(function (error) {
+                console.log(error)
+            })
+            $scope.editTask = function () {
+                taskService.updateTask($localStorage, id, $scope.taskdetails).then(function (result) {
+                    console.log(result)
+                })
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+                $location.path('/taskdetails/' + id)
+            }
+
+        })
+        app.controller('subtaskController', function ($localStorage, $scope, $rootScope, taskService, $location) {
+            $rootScope.loginstate = $localStorage.loginflag;
+            function printSubtask() {
+                taskService.getSubtasks($localStorage.Id, $localStorage.taskid).then(function (result) {
+                    console.log(result.data)
+
+                    $scope.subtasksData = result.data;
+                })
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+            }
+            $scope.deleteSubtask = function (event) {
+                if (getConfirmation() == true) {
+                    let id = event.target.id;
+                    taskService.deleteSubtask($localStorage.Id, $localStorage.taskid, id).then(function (result) {
+                        printSubtask();
+                    })
+                }
             }
             printSubtask()
-            $scope.addSubTask = function(){
-                let taskobj = {
-                    tasktitle: $scope.tasktitle,
-                    taskdiscription: $scope.taskdiscription,
-                    taskDate: $scope.taskDate,
-                    priority:$scope.priority
-                
+            $scope.addSubTask = function () {
+                if (($scope.tasktitle == undefined) && ($scope.tasktitle == null)) {
+                    alert('Enter the Task Title')
+                } else if (($scope.taskdiscription == undefined) && ($scope.taskdiscription == null)) {
+                    alert('Enter the Task Description')
+                } else if (($scope.taskDate == undefined) && ($scope.taskDate == null)) {
+                    alert('Select the Task Date')
+                } else if (($scope.priority == undefined) && ($scope.priority == null)) {
+                    alert('Select the priority')
+                } else if (($scope.tasktitle != '') && ($scope.tasktitle != null) && ($scope.priority != '') && ($scope.priority != null) && ($scope.taskDate != '') && ($scope.taskDate != null) && ($scope.taskdiscription != '') && ($scope.taskdiscription != null)) {
+
+                    let taskobj = {
+                        tasktitle: $scope.tasktitle,
+                        taskdiscription: $scope.taskdiscription,
+                        taskDate: $scope.taskDate,
+                        priority: $scope.priority
 
 
+
+                    }
+                    $scope.tasktitle = null
+                    $scope.taskdiscription = null
+                    $scope.taskDate = null
+                    $scope.priority = null
+                    taskService.addSubtask($localStorage.Id, $localStorage.taskid, taskobj).then(function (result) {
+                        printSubtask();
+                    })
+                } else {
+                    alert('Enetr The Details')
                 }
-                $scope.tasktitle=null
-                $scope.taskdiscription=null
-                $scope.taskDate=null
-                $scope.priority=null
-                taskService.addSubtask($localStorage.Id,$localStorage.taskid,taskobj).then(function(result){
-                    printSubtask();
-                })
+            }
+
+        })
+
+        app.controller('subtaskDetailsController', function ($localStorage, $scope, $routeParams, taskService, $rootScope, $location) {
+            let subtaskid = $routeParams.subtaskid;
+            $rootScope.loginstate = $localStorage.loginflag;
+
+            taskService.getsubtakbyId($localStorage.Id, $localStorage.taskid, subtaskid).then(function (result) {
+                console.log(result)
+
+                $scope.subtask = result.data;
+            }).catch(function (error) {
+                console.log(error)
+            })
+            $scope.editRedirect = function (event) {
+                let id = $routeParams.subtaskid
+                $location.path('/editsubtask/' + id)
+            }
+            $scope.backButton = function () {
+                $location.path('/subtasks')
             }
         })
 
-        app.controller('subtaskDetailsController',function($localStorage,$scope,$routeParams,taskService,$rootScope,$location){
+        app.controller('editSubtaskController', function ($localStorage, $scope, $routeParams, $location, $rootScope, taskService) {
             let subtaskid = $routeParams.subtaskid;
             $rootScope.loginstate = $localStorage.loginflag;
-            
-             taskService.getsubtakbyId($localStorage.Id,$localStorage.taskid,subtaskid).then(function(result){
-                   console.log(result)
 
-                $scope.subtask = result.data;
-               }).catch(function(error){
-                   console.log(error)
-               })
-               $scope.editRedirect=function(event){
-                   let id = $routeParams.subtaskid
-                   $location.path('/editsubtask/'+id)
-               }
-               $scope.backButton = function(){
-                   $location.path('/subtasks')
-               }
-        })
-
-        app.controller('editSubtaskController',function($localStorage,$scope,$routeParams,$rootScope,taskService){
-            let subtaskid = $routeParams.subtaskid;
-            $rootScope.loginstate = $localStorage.loginflag;
-            
-            taskService.getsubtakbyId($localStorage.Id,$localStorage.taskid,subtaskid).then(function(result){
-                   console.log(result.data)
-
-                   $scope.subtaskdetails  = result.data;
-               }).catch(function(error){
-                   console.log(error)
-               })
-               $scope.editSubTask= function(){
-                   taskService.editSubask($localStorage.Id,$localStorage.taskid,subtaskid,$scope.subtaskdetails)
-                   .then(function(result){
-                       $location('//subtaskdetails/'+subtaskid)
-                   })
-               }
+            taskService.getsubtakbyId($localStorage.Id, $localStorage.taskid, subtaskid).then(function (result) {
+                console.log(result.data)
+                result.data.taskDate = new Date(result.data.taskDate)
+                $scope.subtaskdetails = result.data;
+            }).catch(function (error) {
+                console.log(error)
+            })
+            $scope.editSubTask = function () {
+                taskService.editSubask($localStorage.Id, $localStorage.taskid, subtaskid, $scope.subtaskdetails)
+                    .then(function (result) {
+                        $location.path('/subtaskdetails/' + subtaskid)
+                    })
+            }
 
         })
+        function getConfirmation() {
+            var retVal = confirm("Do you want to continue ?");
+            if (retVal == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
 
     </script>

@@ -165,8 +165,8 @@ module.exports = class Usercontroller {
             response.send(data)
         })
         this.app.post('/api/v1/adduser/', async (request, response) => {
-            let fname = request.body.fname
-            let lname = request.body.lname
+            let fname = request.body.name.fname
+            let lname = request.body.name.lname
             let username = request.body.username
             let password = request.body.password
             let mobileno = request.body.mobileno

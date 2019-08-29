@@ -38,10 +38,10 @@ let userSchema = new mongoose.Schema({
 let User = connection.model('User', userSchema)
 let user1 = new User({
     name: {
-        fname: 'Manish',
-        lname: 'UKiar'
+        fname: 'Chirag',
+        lname: 'Shaha'
     },
-    username: 'Manish123',
+    username: 'Chirag123',
     password: '1234',
     mobileno: '8691983106',
     Task: [{
