@@ -24,7 +24,7 @@
                 <td>{{task.taskDate | date : mm/dd/yyyy }}</td>
 
             </tr>
-            <tr >
+            <tr ng-show='addState' >
                 <form class="form-inline">
                 <td>
                     <div class="form-group">
@@ -45,9 +45,10 @@
 
                 <td>
                     <div class="form-group">
+                        <textarea rows="4" cols="50" ng-model='taskdiscription' class="form-control" aria-describedby="helpId"
+                        placeholder="Enter Description of Your task">
+                            </textarea>
                         
-                        <input type="text" ng-model='taskdiscription' class="form-control" aria-describedby="helpId"
-                            placeholder="Enter Description of Your task">
 
                     </div>
                 </td>
@@ -73,6 +74,8 @@
             </tr>
         </tbody>
     </table>
+       <button ng-hide='addState' ng-click='changeAddState()' type="button" name="addnew" id="ans" class="btn btn-primary  btn-block">Add New task</button>
+       <button ng-show='addState' ng-click='changeAddState()' type="button" name="cancel" id="absja" class="btn btn-danger  btn-block">cancel</button>
     <br>
     <br><br>
     <a name="" id="" class="btn btn-primary" href="#!/user/" role="button">

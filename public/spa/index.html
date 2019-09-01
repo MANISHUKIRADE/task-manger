@@ -2,7 +2,7 @@
 
 <head>
     <style>
-                           
+
     </style>
     <title>TaskManager</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -54,7 +54,7 @@
             })
                 .when('/register', {
                     templateUrl: "fragments/register.html",
-                    controller: "regiszterController"
+                    controller: "registerController"
                 })
                 .when('/user/', {
                     templateUrl: 'fragments/user.html',
@@ -370,11 +370,12 @@
                         password: $scope.password,
                         mobileno: $scope.mobileno
                     }
-                    taskService.registerUser(user).then(function (result) {
-
+                    taskService.registerUser(user)
+                    .then(function (result) {
                         $location.path('/login/')
 
-                    }).catch(function (error) {
+                    })
+                    .catch(function (error) {
                         console.log(error)
                     })
 
@@ -413,6 +414,7 @@
 
         app.controller('taskController', function ($scope, $rootScope, $localStorage, $location, taskService) {
             $rootScope.loginstate = $localStorage.loginflag;
+            $scope.addState = false
 
             function loadTask() {
                 taskService.getUsersTasks($localStorage.Id).then(function (result) {
@@ -447,6 +449,7 @@
 
                     taskService.addTask($localStorage.Id, taskobj).then(function (result) {
                         console.log(result)
+                        $scope.addState = false;
                         loadTask();
                     }).catch(function (error) {
                         console.log(error)
@@ -467,6 +470,15 @@
                         console.log(error)
                         alert('Some Error')
                     })
+                }
+            }
+
+            $scope.changeAddState = function () {
+
+                if ($scope.addState == true) {
+                    $scope.addState = false
+                } else if ($scope.addState == false) {
+                    $scope.addState = true
                 }
             }
 
