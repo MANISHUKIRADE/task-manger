@@ -115,7 +115,7 @@ module.exports = {
       .catch(err => {
         return err
       })
-    
+            return ('data added')  
   },
   updateUser:async (id,fname, lname, username, password, mobileno) =>{
     const o_id = new mongo.ObjectID(id); 

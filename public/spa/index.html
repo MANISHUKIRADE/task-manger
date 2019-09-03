@@ -138,6 +138,7 @@
                         data: user
                     })
                 }).then(function (response) {
+                    console.log('resolve')
                     resolve('data Added Successfully')
                 })
                     .catch(function (error) {
@@ -382,6 +383,7 @@
                 } else {
                     alert('Enter The Correct Details')
                 }
+                $location.path('/login/')
             }
         })
         app.controller('editUserController', function ($scope, $rootScope, $localStorage, $location, taskService) {
