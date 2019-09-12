@@ -2,8 +2,34 @@ const service = require('../serviceses/userServices')
 const expressJWT = require('express-jwt')
 const jwt = require('jsonwebtoken')
 const jwtSecret = Buffer.from('Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt', 'base64');
+let express = require('express')
+let router = express.Router()
+let cors = require('cors')
+bodyParser = require('body-parser')
+router.use(cors())
+router.use(bodyParser.urlencoded({
+    extended: false
+}));
+router.use(bodyParser.json());
 
-module.exports = class AuthUser {
+router.post('/login/', async(request, response) => {
+    let password = request.body.password;
+    let username = request.body.username;
+    let data = await service.getUsersService();
+    for (let index = 0; index < data.length; index++) {
+        if ((data[index].username == username) && (data[index].password = password)) {
+            const token = jwt.sign({
+                sub: data[index]._id
+            }, jwtSecret);
+            response.send({
+                token
+            })
+        }
+    }
+})
+
+module.exports = router;
+/* class AuthUser {
     constructor(app) {
         this.app = app
         this.route();
@@ -14,16 +40,16 @@ module.exports = class AuthUser {
             credentialsRequired: false
         }));
 
-        
-        this.app.post('/login/', async (request, response) => {
+
+        this.app.post('/login/', async(request, response) => {
             let password = request.body.password;
             let username = request.body.username;
             let data = await service.getUsersService();
-            for(let index =0;index<data.length;index++){
-                if((data[index].username == username)&&(data[index].password= password) ){
+            for (let index = 0; index < data.length; index++) {
+                if ((data[index].username == username) && (data[index].password = password)) {
                     const token = jwt.sign({
-                        sub:data[index]._id
-                    },jwtSecret);
+                        sub: data[index]._id
+                    }, jwtSecret);
                     response.send({
                         token
                     })
@@ -31,4 +57,4 @@ module.exports = class AuthUser {
             }
         })
     }
-}
+    */
