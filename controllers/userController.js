@@ -154,17 +154,17 @@ module.exports = class Usercontroller {
         this.route()
     }
     route() {
-        this.app.get('/api/v1/users/', async (request, response) => {
+        this.app.get('/api/v1/users/', async(request, response) => {
             let data = await getUsers()
             response.send(data)
         })
-        this.app.get('/api/v1/user/:userid/', async (request, response) => {
+        this.app.get('/api/v1/user/:userid/', async(request, response) => {
             let id = request.params.userid;
-         console.log(request.user)
+            console.log(request.user)
             let data = await getUser(id)
             response.send(data)
         })
-        this.app.post('/api/v1/adduser/', async (request, response) => {
+        this.app.post('/api/v1/adduser/', async(request, response) => {
             let fname = request.body.name.fname
             let lname = request.body.name.lname
             let username = request.body.username
@@ -173,7 +173,7 @@ module.exports = class Usercontroller {
             let data = service.addUser(fname, lname, username, password, mobileno)
             response.send(data)
         })
-        this.app.put('/api/v1/edituser/:userid/', async (request, response) => {
+        this.app.put('/api/v1/edituser/:userid/', async(request, response) => {
             let id = request.params.userid
             let fname = request.body.fname
             let lname = request.body.lname
@@ -183,7 +183,7 @@ module.exports = class Usercontroller {
             let data = service.updateUser(id, fname, lname, username, password, mobileno)
             response.send(data)
         })
-        this.app.post('/api/v1/authenticate/', async (request, response) => {
+        this.app.post('/api/v1/authenticate/', async(request, response) => {
             let password = request.body.password;
             let username = request.body.username;
             let data = await service.getAutheticateUser(username, password)
